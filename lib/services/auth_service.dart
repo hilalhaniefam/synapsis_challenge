@@ -16,10 +16,10 @@ class AuthServices {
     // ignore: prefer_typing_uninitialized_variables
     var response = await http.post(Uri.parse("$uri/login.php"),
         body: {"username": username, "password": password});
-    Map<String, dynamic> resBody = json.decode(response.body);
-    debugPrint("ini resBody: $resBody, Api CALLED");
     try {
       if (response.statusCode == 200) {
+        Map<String, dynamic> resBody = json.decode(response.body);
+        debugPrint("ini resBody: $resBody, Api CALLED");
         var payload = resBody['data'];
         Users authUser = Users.fromJson(payload);
         // result = {"user": authUser};
@@ -34,8 +34,7 @@ class AuthServices {
       }
     } catch (e) {
       debugPrint(e.toString());
-      ScaffoldMessenger.of(context)
-          .showSnackBar(CustomSnackbar(resBody['message']));
+      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(e.toString()));
     }
   }
 }
