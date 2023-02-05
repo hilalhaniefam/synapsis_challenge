@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:synapsis_project/services/auth_service.dart';
 import 'package:synapsis_project/views/screens/helper.dart';
 import 'package:synapsis_project/views/screens/widgets/text_animation.dart';
@@ -14,8 +16,64 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  LocalAuthentication localAuth = LocalAuthentication();
+  bool? _checkFingerprint;
+  List<BiometricType>? _availableBiometric;
+  String autherized = 'Failed';
   AuthServices services = AuthServices();
   bool _hidePass = true;
+
+  Future<void> _checkBiometric() async {
+    bool? checkFingerprint;
+    try {
+      checkFingerprint = await localAuth.canCheckBiometrics;
+    } on PlatformException catch (e) {
+      debugPrint(e.toString());
+    }
+    if (!mounted) return;
+    setState(() {
+      _checkFingerprint = checkFingerprint;
+    });
+  }
+
+  Future<void> _getAvailableBiometrics() async {
+    List<BiometricType>? availableBiometric;
+    try {
+      availableBiometric = await localAuth.getAvailableBiometrics();
+    } on PlatformException catch (e) {
+      print(e);
+    }
+    if (!mounted) return;
+
+    setState(() {
+      _availableBiometric = availableBiometric;
+    });
+  }
+
+  Future<void> _authenticate() async {
+    bool authenticated = false;
+    try {
+      authenticated = await localAuth.authenticate(
+        localizedReason: "Scan your finger print to authenticate",
+      );
+      print('kepencet');
+    } on PlatformException catch (e) {
+      print(e);
+    }
+    if (!mounted) return;
+
+    setState(() {
+      autherized =
+          authenticated ? "Autherized success" : "Failed to authenticate";
+    });
+  }
+
+  @override
+  void initState() {
+    _checkBiometric();
+    _getAvailableBiometrics();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +83,9 @@ class _LoginScreenState extends State<LoginScreen> {
     };
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      body: SafeArea(
-        child: Center(
-            child: Column(
+      body: Center(
+          child: SingleChildScrollView(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(
@@ -140,10 +198,25 @@ class _LoginScreenState extends State<LoginScreen> {
                 'LOGIN',
                 style: Styles.fonts,
               ),
-            )
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Text('Or login with'),
+            const SizedBox(
+              height: 10,
+            ),
+            IconButton(
+                onPressed: () {
+                  _authenticate();
+                },
+                icon: const Icon(
+                  FontAwesomeIcons.fingerprint,
+                  size: 50,
+                ))
           ],
-        )),
-      ),
+        ),
+      )),
     );
   }
 }

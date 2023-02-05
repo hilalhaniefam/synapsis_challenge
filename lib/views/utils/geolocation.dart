@@ -64,7 +64,7 @@ Widget myLocation(
               onTap: (startLoading, stopLoading, btnState) async {
                 if (btnState == ButtonState.idle) {
                   startLoading();
-                  await Future.delayed(const Duration(seconds: 5));
+                  await Future.delayed(const Duration(seconds: 2));
                   currentLocation();
                   stopLoading();
                 }
