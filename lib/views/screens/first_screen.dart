@@ -126,7 +126,6 @@ class _FirstScreenState extends State<FirstScreen> {
     try {
       if (Platform.isAndroid) {
         deviceData = readAndroidBuildData(await deviceInfoPlugin.androidInfo);
-        print(deviceData);
       } else if (Platform.isIOS) {
         deviceData = readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
       }
@@ -146,9 +145,7 @@ class _FirstScreenState extends State<FirstScreen> {
   void getCurrentLocation() async {
     var position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    var lastPosition = await Geolocator.getLastKnownPosition();
-    print(position);
-    print(lastPosition);
+    // var lastPosition = await Geolocator.getLastKnownPosition();
     setState(() {
       location = "Lat: ${position.latitude}, Long: ${position.longitude}";
     });

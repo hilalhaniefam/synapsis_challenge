@@ -56,7 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
       authenticated = await localAuth.authenticate(
         localizedReason: "Scan your finger print to authenticate",
       );
-      print('kepencet');
     } on PlatformException catch (e) {
       print(e);
     }

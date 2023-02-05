@@ -35,7 +35,7 @@ Widget myLocation(
             location!.isNotEmpty
                 ? Text(
                     location,
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   )
                 : const Text(
                     'Click button below',
