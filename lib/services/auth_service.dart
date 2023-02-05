@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:synapsis_project/models/users.dart';
+import 'package:synapsis_project/views/screens/dashboard.dart';
 import 'package:synapsis_project/views/shared/snackbar.dart';
 
 class AuthServices {
@@ -22,7 +23,10 @@ class AuthServices {
         var payload = resBody['data'];
         Users authUser = Users.fromJson(payload);
         // result = {"user": authUser};
-        Navigator.pushReplacementNamed(context, "/dashboard");
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => const Dashboard()));
         ScaffoldMessenger.of(context)
             .showSnackBar(CustomSnackbar(resBody['message']));
       } else {

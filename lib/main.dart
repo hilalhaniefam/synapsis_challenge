@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:synapsis_project/views/screens/dashboard.dart';
 import 'package:synapsis_project/views/screens/login_screen.dart';
-import 'package:synapsis_project/views/screens/second_screen.dart';
+import 'package:synapsis_project/views/screens/first_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,7 +31,9 @@ class MyApp extends StatelessWidget {
         ),
         home: const LoginScreen(),
         routes: {
-          "/dashboard": (context) => const SecondScreen(),
+          "/login": (context) => const LoginScreen(),
+          "/welcome": (context) => const FirstScreen(),
+          "/dashboard": (context) => const Dashboard()
         });
   }
 }
