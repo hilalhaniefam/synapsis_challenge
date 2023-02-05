@@ -8,8 +8,7 @@ Widget textAnimation({required BuildContext context}) {
     height: 50,
     child: DefaultTextStyle(
       textAlign: TextAlign.center,
-      style: GoogleFonts.lato(
-          fontSize: 35, color: Colors.black, fontWeight: FontWeight.bold),
+      style: GoogleFonts.poppins(fontSize: 30, color: Colors.black),
       child: Center(
         child: AnimatedTextKit(
           animatedTexts: [
@@ -17,9 +16,7 @@ Widget textAnimation({required BuildContext context}) {
             FadeAnimatedText('Synapsis Sinergi'),
             FadeAnimatedText('Synapsis Sinergi Digital'),
           ],
-          onTap: () {
-            print("Tap Event");
-          },
+          onTap: () {},
         ),
       ),
     ),

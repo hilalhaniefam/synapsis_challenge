@@ -25,111 +25,125 @@ class _LoginScreenState extends State<LoginScreen> {
     };
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20),
-            child: textAnimation(context: context),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: SizedBox(
-              width: screenSize['width'] * 0.7,
-              child: TextFormField(
-                controller: formCon['username'],
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(
-                    FontAwesomeIcons.user,
-                    size: 20,
-                  ),
-                  labelText: "username",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide:
-                          const BorderSide(color: Colors.black, width: 2.0)),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25),
-                    borderSide:
-                        const BorderSide(color: Colors.black, width: 2.0),
-                  ),
+      body: SafeArea(
+        child: Center(
+            child: Column(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 50,
+            ),
+            const Icon(
+              Icons.lock,
+              size: 100,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: textAnimation(context: context),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SizedBox(
+                width: screenSize['width'] * 0.7,
+                child: TextFormField(
+                  controller: formCon['username'],
+                  decoration: InputDecoration(
+                      prefixIcon: const Icon(
+                        FontAwesomeIcons.user,
+                        size: 20,
+                      ),
+                      labelText: "username",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(
+                              color: Colors.black, width: 2.0)),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide:
+                            const BorderSide(color: Colors.black, width: 2.0),
+                      ),
+                      fillColor: Colors.grey.shade200,
+                      filled: true),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: SizedBox(
-              width: screenSize['width'] * 0.7,
-              child: TextFormField(
-                obscureText: _hidePass,
-                controller: formCon['password'],
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(
-                    FontAwesomeIcons.lock,
-                    size: 20,
-                  ),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _hidePass
-                          ? FontAwesomeIcons.eye
-                          : FontAwesomeIcons.eyeSlash,
-                      size: 20,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _hidePass = !_hidePass;
-                      });
-                    },
-                  ),
-                  labelText: "password",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide:
-                          const BorderSide(color: Colors.black, width: 2.0)),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25),
-                    borderSide:
-                        const BorderSide(color: Colors.black, width: 2.0),
-                  ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SizedBox(
+                width: screenSize['width'] * 0.7,
+                child: TextFormField(
+                  obscureText: _hidePass,
+                  controller: formCon['password'],
+                  decoration: InputDecoration(
+                      prefixIcon: const Icon(
+                        FontAwesomeIcons.lock,
+                        size: 20,
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _hidePass
+                              ? FontAwesomeIcons.eye
+                              : FontAwesomeIcons.eyeSlash,
+                          size: 20,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _hidePass = !_hidePass;
+                          });
+                        },
+                      ),
+                      labelText: "password",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(
+                              color: Colors.black, width: 2.0)),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide:
+                            const BorderSide(color: Colors.black, width: 2.0),
+                      ),
+                      fillColor: Colors.grey.shade200,
+                      filled: true),
                 ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          LoadingBtn(
-            borderRadius: 10,
-            color: Colors.black,
-            height: 45,
-            width: screenSize['width'] * 0.4,
-            loader: Container(
-              padding: const EdgeInsets.all(10),
-              width: 40,
-              height: 40,
-              child: const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            const SizedBox(
+              height: 20,
+            ),
+            LoadingBtn(
+              borderRadius: 10,
+              color: Colors.black,
+              height: 45,
+              width: screenSize['width'] * 0.4,
+              loader: Container(
+                padding: const EdgeInsets.all(10),
+                width: 40,
+                height: 40,
+                child: const CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
               ),
-            ),
-            onTap: (startLoading, stopLoading, btnState) async {
-              if (btnState == ButtonState.idle) {
-                startLoading();
-                await Future.delayed(const Duration(seconds: 2));
-                services.authLogin(
-                    formCon['username'].text, formCon['password'].text,
-                    context: context);
-                stopLoading();
-              }
-            },
-            child: Text(
-              'LOGIN',
-              style: Styles.fonts,
-            ),
-          )
-        ],
-      )),
+              onTap: (startLoading, stopLoading, btnState) async {
+                if (btnState == ButtonState.idle) {
+                  startLoading();
+                  await Future.delayed(const Duration(seconds: 2));
+                  services.authLogin(
+                      formCon['username'].text, formCon['password'].text,
+                      context: context);
+                  stopLoading();
+                }
+              },
+              child: Text(
+                'LOGIN',
+                style: Styles.fonts,
+              ),
+            )
+          ],
+        )),
+      ),
     );
   }
 }
